@@ -1,5 +1,9 @@
 package com.interview.interview.model;
 
+import com.interview.interview.model.dto.CarDto;
+import com.interview.interview.model.dto.ParkingDto;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,6 +13,8 @@ import java.util.Set;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 public class Parking {
 
@@ -28,6 +34,15 @@ public class Parking {
     this.name = name;
     this.address = address;
     this.coordinates = coordinates;
+  }
+
+  public static Parking from(ParkingDto parkingDto) {
+    return Parking.builder()
+        .parkingId(parkingDto.getParkingId())
+        .name(parkingDto.getName())
+        .address(parkingDto.getAddress())
+        .coordinates(parkingDto.getCoordinates())
+        .build();
   }
 
   public void addSpot(ParkingSpot spot) {

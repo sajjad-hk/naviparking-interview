@@ -32,7 +32,6 @@ public class ParkingService {
 
     ParkingSpot spot = parkingSpotRepository.save(new ParkingSpot(max));
     parking.addSpot(spot);
-
     return parkingRepository.save(parking);
   }
 

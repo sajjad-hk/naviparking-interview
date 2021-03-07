@@ -1,5 +1,8 @@
 package com.interview.interview.model;
 
+import com.interview.interview.model.dto.UserDto;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -7,8 +10,12 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+import static java.util.stream.Collectors.toSet;
+
 @Data
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class User {
 
@@ -30,10 +37,22 @@ public class User {
   private Set<Parking> assignedParking = new HashSet<>();
 
   public User(String firstName, String lastName, String emailAddress, String password) {
-    this.userId = userId;
     this.firstName = firstName;
     this.lastName = lastName;
     this.emailAddress = emailAddress;
     this.password = password;
+  }
+
+  public static User from(UserDto userDto) {
+    return User.builder()
+        .userId(userDto.getUserId())
+        .firstName(userDto.getFirstName())
+        .lastName(userDto.getLastName())
+        .emailAddress(userDto.getEmailAddress())
+        .password(userDto.getPassword())
+        .car(Car.from(userDto.getCar()))
+        .assignedParking(
+            userDto.getAssignedParking().stream().map(Parking::from).collect(toSet()))
+        .build();
   }
 }

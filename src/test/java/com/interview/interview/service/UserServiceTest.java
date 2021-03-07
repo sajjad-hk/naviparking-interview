@@ -4,6 +4,7 @@ import com.interview.interview.model.Car;
 import com.interview.interview.model.User;
 import com.interview.interview.repository.CarRepository;
 import com.interview.interview.repository.UserRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,11 @@ class UserServiceTest {
   @Autowired private UserRepository userRepository;
   @Autowired private CarRepository carRepository;
 
+  @AfterEach
+  void tearDown() {
+    userRepository.deleteAll();
+  }
+
   @Test
   void testAddBaseUser() {
 
@@ -35,6 +41,23 @@ class UserServiceTest {
         () -> assertEquals(savedUser.getEmailAddress(), "john.due@tst.com"),
         () -> assertEquals(savedUser.getPassword(), "password 123"),
         () -> assertNull(savedUser.getCar()));
+  }
+
+  @Test
+  void testCreateUser_withCar() {
+
+    User user = new User("John", "Due", "john.due@tst.com", "password 123");
+    Car car = new Car("TST 123 PL", "Mars", "DE");
+    user.setCar(car);
+    User savedUser = userService.addUser(user);
+    assertAll(
+            "user",
+            () -> assertEquals(savedUser.getUserId(), user.getUserId()),
+            () -> assertEquals(savedUser.getFirstName(), "John"),
+            () -> assertEquals(savedUser.getLastName(), "Due"),
+            () -> assertEquals(savedUser.getEmailAddress(), "john.due@tst.com"),
+            () -> assertEquals(savedUser.getPassword(), "password 123"),
+            () -> assertNotNull(savedUser.getCar()));
   }
 
   @Test

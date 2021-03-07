@@ -20,7 +20,7 @@ public class UserService {
   private final CarRepository carRepository;
 
   public User addUser(User user) {
-    return userRepository.save(user);
+   return userRepository.save(user);
   }
 
   @Transactional
@@ -40,5 +40,15 @@ public class UserService {
   public List<User> getAllUsers() {
     return StreamSupport.stream(userRepository.findAll().spliterator(), false)
         .collect(Collectors.toList());
+  }
+
+  public User editUser(Long id, User user) {
+    User userToEdit = findUserById(id);
+    userToEdit.setFirstName(user.getFirstName());
+    userToEdit.setLastName(user.getLastName());
+    userToEdit.setEmailAddress(user.getEmailAddress());
+    userToEdit.setPassword(user.getPassword());
+    userToEdit.setCar(user.getCar());
+    return userToEdit;
   }
 }
