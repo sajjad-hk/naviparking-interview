@@ -1,13 +1,10 @@
 package com.interview.interview.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -15,16 +12,19 @@ import java.util.Set;
 @Entity
 public class Parking {
 
-  @Id @GeneratedValue private Long id;
+  @Id @GeneratedValue private Long parkingId;
   private String name;
   private String address;
   private String coordinates;
 
-  @OneToMany(mappedBy = "parking")
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "parking")
   private Set<ParkingSpot> spots;
 
-  public Parking(Long id, String name, String address, String coordinates) {
-    this.id = id;
+  @ManyToMany(mappedBy = "assignedParking")
+  private Set<User> users = new HashSet<>();
+
+  public Parking(Long parkingId, String name, String address, String coordinates) {
+    this.parkingId = parkingId;
     this.name = name;
     this.address = address;
     this.coordinates = coordinates;

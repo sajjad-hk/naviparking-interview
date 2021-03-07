@@ -11,13 +11,12 @@ import javax.persistence.*;
 @Entity
 public class Car {
 
-  @Id
-  private String plateNumber;
+  @Id private String plateNumber;
   private String model;
   private String make;
 
   @OneToOne
-  @JoinColumn(name = "id")
+  @JoinColumn(name = "userId")
   private User user;
 
   public Car(String plateNumber, String model, String make) {

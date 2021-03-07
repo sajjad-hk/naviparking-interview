@@ -13,7 +13,7 @@ class ParkingTest {
 
     assertAll(
         "parking",
-        () -> assertEquals(parking.getId(), 1L),
+        () -> assertEquals(parking.getParkingId(), 1L),
         () -> assertEquals(parking.getName(), "parking 1"),
         () -> assertEquals(parking.getAddress(), "21 Test S.t."),
         () -> assertEquals(parking.getCoordinates(), "0Lat, 0Long"),
