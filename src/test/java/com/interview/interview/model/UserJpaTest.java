@@ -18,7 +18,7 @@ public class UserJpaTest {
 
   @Test
   void testMapping_userWithOutCar() {
-    User notPersistedUser = new User(null, "John", "Due", "john.due@tst.com", "password 123");
+    User notPersistedUser = new User("John", "Due", "john.due@tst.com", "password 123");
 
     User user = tem.persistAndFlush(notPersistedUser);
 
@@ -36,7 +36,7 @@ public class UserJpaTest {
   @Test
   void testMapping_userWithCar_withoutParking() {
     Car car = tem.persistAndFlush(new Car("TST 123 PL", "Mars", "DE"));
-    User notPersistedUser = new User(null, "John", "Due", "john.due@tst.com", "password 123");
+    User notPersistedUser = new User("John", "Due", "john.due@tst.com", "password 123");
 
     notPersistedUser.setCar(car);
 
@@ -57,23 +57,22 @@ public class UserJpaTest {
   @Test
   void testMapping_userWithCar_withParking() {
 
-
     Car car = tem.persistAndFlush(new Car("TST 123 PL", "Mars", "DE"));
 
-    ParkingSpot parking1SpotOne = tem.persistAndFlush(new ParkingSpot(null, 1));
-    ParkingSpot parking1SpotTwo = tem.persistAndFlush(new ParkingSpot(null, 2));
-    Parking notPersistedParking1 = new Parking(null, "parking 1", "21 Test S.t.", "0Lat, 0Long");
+    ParkingSpot parking1SpotOne = tem.persistAndFlush(new ParkingSpot(1));
+    ParkingSpot parking1SpotTwo = tem.persistAndFlush(new ParkingSpot(2));
+    Parking notPersistedParking1 = new Parking("parking 1", "21 Test S.t.", "0Lat, 0Long");
     notPersistedParking1.setSpots(Set.of(parking1SpotOne, parking1SpotTwo));
     Parking parking1 = tem.persistAndFlush(notPersistedParking1);
 
-    ParkingSpot parking2SpotOne = tem.persistAndFlush(new ParkingSpot(null, 1));
-    ParkingSpot parking2SpotTwo = tem.persistAndFlush(new ParkingSpot(null, 2));
-    ParkingSpot parking2SpotThree = tem.persistAndFlush(new ParkingSpot(null, 3));
-    Parking notPersistedParking2 = new Parking(null, "parking 1", "21 Test S.t.", "0Lat, 0Long");
+    ParkingSpot parking2SpotOne = tem.persistAndFlush(new ParkingSpot(1));
+    ParkingSpot parking2SpotTwo = tem.persistAndFlush(new ParkingSpot(2));
+    ParkingSpot parking2SpotThree = tem.persistAndFlush(new ParkingSpot(3));
+    Parking notPersistedParking2 = new Parking("parking 1", "21 Test S.t.", "0Lat, 0Long");
     notPersistedParking2.setSpots(Set.of(parking2SpotOne, parking2SpotTwo, parking2SpotThree));
     Parking parking2 = tem.persistAndFlush(notPersistedParking2);
 
-    User notPersistedUser = new User(null, "John", "Due", "john.due@tst.com", "password 123");
+    User notPersistedUser = new User("John", "Due", "john.due@tst.com", "password 123");
 
     notPersistedUser.setCar(car);
     notPersistedUser.setAssignedParking(Set.of(parking1, parking2));

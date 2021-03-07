@@ -16,11 +16,8 @@ public class ParkingSpotJpaTest {
   @Autowired private TestEntityManager tem;
 
   @Test
-  void mapping() {
-    ParkingSpot parkingSpot = tem.persistAndFlush(new ParkingSpot(null, 1));
-    assertAll(
-        "parking spot",
-        () -> assertNotNull(parkingSpot.getSpotId()),
-        () -> assertEquals(parkingSpot.getSpotNumber(), 1));
+  void testMapping_parkingSpot() {
+    ParkingSpot parkingSpot = tem.persistAndFlush(new ParkingSpot());
+    assertAll("parking spot", () -> assertNotNull(parkingSpot.getSpotId()));
   }
 }

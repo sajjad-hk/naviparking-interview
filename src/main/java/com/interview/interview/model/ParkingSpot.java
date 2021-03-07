@@ -13,12 +13,7 @@ public class ParkingSpot {
   @Id @GeneratedValue private Long spotId;
   private int spotNumber;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "parkingId")
-  private Parking parking;
-
-  public ParkingSpot(Long spotId, int spotNumber) {
-    this.spotId = spotId;
+  public ParkingSpot(int spotNumber) {
     this.spotNumber = spotNumber;
   }
 }

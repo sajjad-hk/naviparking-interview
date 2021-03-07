@@ -19,23 +19,22 @@ public class ParkingJpaTest {
 
   @Test
   void testMapping_withNoSpots() {
-    Parking parking =
-        tem.persistAndFlush(new Parking(null, "parking 1", "21 Test S.t.", "0Lat, 0Long"));
+    Parking parking = tem.persistAndFlush(new Parking("parking 1", "21 Test S.t.", "0Lat, 0Long"));
     assertAll(
         "parking",
         () -> assertNotNull(parking.getParkingId()),
         () -> assertEquals(parking.getName(), "parking 1"),
         () -> assertEquals(parking.getAddress(), "21 Test S.t."),
         () -> assertEquals(parking.getCoordinates(), "0Lat, 0Long"),
-        () -> assertNull(parking.getSpots()));
+        () -> assertTrue(parking.getSpots().isEmpty()));
   }
 
   @Test
   void testMapping_withTwoSpots() {
 
-    ParkingSpot parkingSpotOne = tem.persistAndFlush(new ParkingSpot(null, 1));
-    ParkingSpot parkingSpotTwo = tem.persistAndFlush(new ParkingSpot(null, 2));
-    Parking notPersistedParking = new Parking(null, "parking 1", "21 Test S.t.", "0Lat, 0Long");
+    ParkingSpot parkingSpotOne = tem.persistAndFlush(new ParkingSpot());
+    ParkingSpot parkingSpotTwo = tem.persistAndFlush(new ParkingSpot());
+    Parking notPersistedParking = new Parking("parking 1", "21 Test S.t.", "0Lat, 0Long");
     notPersistedParking.setSpots(Set.of(parkingSpotOne, parkingSpotTwo));
     Parking parking = tem.persistAndFlush(notPersistedParking);
     assertAll(
@@ -44,6 +43,7 @@ public class ParkingJpaTest {
         () -> assertEquals(parking.getName(), "parking 1"),
         () -> assertEquals(parking.getAddress(), "21 Test S.t."),
         () -> assertEquals(parking.getCoordinates(), "0Lat, 0Long"),
-        () -> assertFalse(parking.getSpots().isEmpty()), () -> assertEquals(parking.getSpots().size(), 2));
+        () -> assertFalse(parking.getSpots().isEmpty()),
+        () -> assertEquals(parking.getSpots().size(), 2));
   }
 }

@@ -8,11 +8,8 @@ class ParkingSpotTest {
 
   @Test
   public void testCreation() {
-    ParkingSpot parkingSpot = new ParkingSpot(1L, 1);
+    ParkingSpot parkingSpot = new ParkingSpot(1);
 
-    assertAll(
-        "parking spot",
-        () -> assertEquals(parkingSpot.getSpotId(), 1L),
-        () -> assertEquals(parkingSpot.getSpotNumber(), 1));
+    assertAll("parking spot", () -> assertEquals(parkingSpot.getSpotNumber(), 1));
   }
 }

@@ -18,7 +18,8 @@ public class User {
   private String emailAddress;
   private String password;
 
-  @OneToOne(mappedBy = "user")
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "plate_number")
   private Car car;
 
   @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -28,8 +29,7 @@ public class User {
       inverseJoinColumns = @JoinColumn(name = "userId"))
   private Set<Parking> assignedParking = new HashSet<>();
 
-  public User(
-      Long userId, String firstName, String lastName, String emailAddress, String password) {
+  public User(String firstName, String lastName, String emailAddress, String password) {
     this.userId = userId;
     this.firstName = firstName;
     this.lastName = lastName;

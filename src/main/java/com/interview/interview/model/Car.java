@@ -1,10 +1,10 @@
 package com.interview.interview.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Data
 @NoArgsConstructor
@@ -14,10 +14,6 @@ public class Car {
   @Id private String plateNumber;
   private String model;
   private String make;
-
-  @OneToOne
-  @JoinColumn(name = "userId")
-  private User user;
 
   public Car(String plateNumber, String model, String make) {
     this.plateNumber = plateNumber;
